@@ -1,0 +1,134 @@
+<!doctype html>
+<head>
+  <title>Βρες το συνδυασμό</title>
+  <meta charset="utf-8">
+  <script>
+  xromata=["red","green","blue","brown","gold","pink"];
+  tyxaiaxromata=["red","green","blue","brown","gold","pink"];
+  pinakaselegxou=[];
+  thesix=50;
+  thesiy=50; simeioelegxou=0;
+  prospatheies=1;
+  function shuffle(array) {
+    // http://stackoverflow.com/questions/962802#962890
+var tmp, current, top = array.length;
+if(top) while(--top) {
+current = Math.floor(Math.random() * (top + 1));
+tmp = array[current];
+array[current] = array[top];
+array[top] = tmp;
+}
+return array;
+}
+function posaidia(a,b) {
+  var x=0;
+  for (var i=0;i<a.length;i++){
+    if (a[i]==b[i]) {
+      x=x+1;
+    }
+  }
+  return x;
+}
+function tsekare() {
+    var swsta=posaidia(pinakaselegxou,tyxaiaxromata);
+  var svg = document.getElementsByTagName('svg')[0];
+  if (swsta==4) {
+    var elems = document.getElementsByClassName("kyklos");
+    for (var i=0;i<6;i++) {
+      elems[i].style.visibility = "hidden";
+    }
+    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+    newElement.setAttribute("x","70");
+    newElement.setAttribute("y",(thesiy+100).toString());
+    newElement.setAttribute("fill","green");
+    newElement.style.fontFamily="Arial Black";
+    newElement.style.fontSize=50;
+    newElement.innerHTML="Μπράβο! Το βρήκες!";
+    svg.appendChild(newElement);
+    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+    newElement.setAttribute("x","150");
+    newElement.setAttribute("y",(thesiy+160).toString());
+    newElement.setAttribute("fill","black");
+    newElement.style.fontFamily="Arial Black";
+    newElement.style.fontSize=40;
+    newElement.style.textDecoration="underline";
+    newElement.innerHTML="<a href='syndyasmos.html'>Νέος συνδυασμός</a>";
+    svg.appendChild(newElement);
+  }
+  else if (prospatheies==8) {
+    var elems = document.getElementsByClassName("kyklos");
+    for (var i=0;i<6;i++) {
+      elems[i].style.visibility = "hidden";
+    }
+    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+    newElement.setAttribute("x","70");
+    newElement.setAttribute("y",(thesiy+80).toString());
+    newElement.setAttribute("fill","red");
+    newElement.style.fontFamily="Arial Black";
+    newElement.style.fontSize=25;
+    newElement.innerHTML="Δεν τα κατάφερες! Ο συνδυασμός ήταν";
+    svg.appendChild(newElement);
+    for (var i=0;i<4;i++) {
+      var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+      newElement.setAttribute("cx",(i*50+250).toString());
+      newElement.setAttribute("cy",(thesiy+120).toString());
+      newElement.setAttribute("r","20");
+      newElement.setAttribute("fill",tyxaiaxromata[i]);
+      svg.appendChild(newElement);
+    }
+    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+    newElement.setAttribute("x","150");
+    newElement.setAttribute("y",(thesiy+200).toString());
+    newElement.setAttribute("fill","black");
+    newElement.style.fontFamily="Arial Black";
+    newElement.style.fontSize=40;
+    newElement.style.textDecoration="underline";
+    newElement.innerHTML="<a href='syndyasmos.html'>Νέος συνδυασμός</a>";
+    svg.appendChild(newElement);
+  }
+var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+newElement.setAttribute("x","450");
+newElement.setAttribute("y",(thesiy+10).toString());
+newElement.setAttribute("fill","black");
+newElement.style.fontFamily="Arial Black";
+newElement.style.fontSize=30;
+newElement.innerHTML="Σωστά="+swsta.toString();
+svg.appendChild(newElement);
+
+}
+function zwgraf(x) {
+   var svg = document.getElementsByTagName('svg')[0];
+var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+newElement.setAttribute("cx",thesix.toString());
+newElement.setAttribute("cy",thesiy.toString());
+newElement.setAttribute("r","20");
+newElement.setAttribute("fill",xromata[x]);
+svg.appendChild(newElement);
+pinakaselegxou[simeioelegxou]=xromata[x];
+    thesix=thesix+100;
+    simeioelegxou+=1;
+    if (simeioelegxou==4) {
+      tsekare();
+      simeioelegxou=0;
+      thesix=50;
+      thesiy=thesiy+50;
+      prospatheies=prospatheies+1;
+}
+}
+function arxikaxromata() {
+ tyxaiaxromata=shuffle(tyxaiaxromata).slice(0,4); 
+ for (var i=0; i<6; i++) {
+   ctx=(i*100+60).toString();
+   document.write("<circle cx="+ctx+" cy='500' r='40' fill="+xromata[i]+" stroke='black' stroke-width='4' class='kyklos' onclick='zwgraf("+i+")'; />");
+   }
+}
+  </script>
+</head>
+<body>
+  <svg width="650" height="650">
+  <script>
+  arxikaxromata();
+  </script>
+</svg>
+</body>
+</html>
